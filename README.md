@@ -1,5 +1,9 @@
 # fibererror
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/prongbang/fibererror)](https://goreportcard.com/report/github.com/prongbang/fibererror)
+
+Create a custom response using the error interface in Go.
+
 ### Install
 
 ```shell
