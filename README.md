@@ -22,19 +22,16 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func login() error {
-	return fibererror.NewUnauthorized()
-}
-
 func main() {
 	app := fiber.New()
 
+	response := fibererror.New()
+	
 	app.Get("/", func(c *fiber.Ctx) error {
-		err := login()
-		return fibererror.New(c).Response(err)
+		return response.With(c).Response(fibererror.NewUnauthorized())
 	})
 
-	app.Listen(":3000")
+	_ = app.Listen(":3000")
 }
 ```
 
@@ -61,7 +58,6 @@ func NewCustomError() error {
 	return &CustomError{
 		Body: fibererror.Body{
 			Code:    "CUS001",
-			Message: "Custom 001",
 		},
 	}
 }
@@ -82,20 +78,72 @@ func NewCustomResponse() fibererror.Custom {
 	return &customResponse{}
 }
 
-func custom() error {
-	return NewCustomError()
-}
-
 func main() {
 	app := fiber.New()
 
 	customResp := NewCustomResponse()
-
-	app.Get("/", func(c *fiber.Ctx) error {
-		err := custom()
-		return fibererror.New(c).Custom(customResp).Response(err)
+	response := fibererror.New(&fibererror.Config{
+		Custom: &customResp,
 	})
 
-	app.Listen(":3000")
+	app.Get("/", func(c *fiber.Ctx) error {
+		return response.With(c).Response(NewCustomError())
+	})
+
+	_ = app.Listen(":3000")
+}
+```
+
+- Use by Custom Code + Localization header `Accept-Language: en`
+
+localize/en.yaml
+```yaml
+CUS001: Custom 001
+```
+
+localize/th.yaml
+```yaml
+CUS001: ดัดแปลง 001
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/gofiber/contrib/fiberi18n/v2"
+	"github.com/gofiber/fiber/v2"
+	"github.com/prongbang/fibererror"
+	"golang.org/x/text/language"
+	"net/http"
+)
+
+func main() {
+	app := fiber.New()
+	app.Use(fiberi18n.New(&fiberi18n.Config{
+		RootPath:        "./localize",
+		AcceptLanguages: []language.Tag{language.Thai, language.English},
+		DefaultLanguage: language.English,
+	}))
+
+	customResp := NewCustomResponse()
+	response := fibererror.New(&fibererror.Config{
+		Custom: &customResp,
+		I18n: &fibererror.I18n{
+			Enabled: true,
+			Localize: func(ctx *fiber.Ctx, code string) (string, error) {
+				return fiberi18n.Localize(ctx, code)
+			},
+		},
+	})
+
+	app.Get("/", func(c *fiber.Ctx) error {
+		return response.With(c).Response(NewCustomError())
+	})
+
+	err := app.Listen(":3000")
+	if err != nil {
+		fmt.Println("err:")
+	}
 }
 ```
