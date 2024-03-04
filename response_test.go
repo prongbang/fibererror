@@ -3,6 +3,7 @@ package fibererror_test
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/prongbang/fibererror"
+	"github.com/prongbang/goerror"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -11,7 +12,7 @@ import (
 var response = fibererror.New()
 
 type CustomError struct {
-	fibererror.Body
+	goerror.Body
 }
 
 // Error implements error.
@@ -21,7 +22,7 @@ func (c *CustomError) Error() string {
 
 func NewCustomError() error {
 	return &CustomError{
-		Body: fibererror.Body{
+		Body: goerror.Body{
 			Code: "CUS001",
 		},
 	}
@@ -65,7 +66,7 @@ func TestNewCustomError(t *testing.T) {
 func TestNewUseProxy(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewUseProxy())
+		return response.With(c).Response(goerror.NewUseProxy())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -78,7 +79,7 @@ func TestNewUseProxy(t *testing.T) {
 func TestNewUnauthorized(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewUnauthorized())
+		return response.With(c).Response(goerror.NewUnauthorized())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -91,7 +92,7 @@ func TestNewUnauthorized(t *testing.T) {
 func TestNewTemporaryRedirect(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewTemporaryRedirect())
+		return response.With(c).Response(goerror.NewTemporaryRedirect())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -104,7 +105,7 @@ func TestNewTemporaryRedirect(t *testing.T) {
 func TestNewNotFound(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewNotFound())
+		return response.With(c).Response(goerror.NewNotFound())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -117,7 +118,7 @@ func TestNewNotFound(t *testing.T) {
 func TestNewSwitchingProtocols(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewSwitchingProtocols())
+		return response.With(c).Response(goerror.NewSwitchingProtocols())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -130,7 +131,7 @@ func TestNewSwitchingProtocols(t *testing.T) {
 func TestNewSeeOther(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewSeeOther())
+		return response.With(c).Response(goerror.NewSeeOther())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -143,7 +144,7 @@ func TestNewSeeOther(t *testing.T) {
 func TestNewResetContent(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewResetContent())
+		return response.With(c).Response(goerror.NewResetContent())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -156,7 +157,7 @@ func TestNewResetContent(t *testing.T) {
 func TestNewRequestTimeout(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewRequestTimeout())
+		return response.With(c).Response(goerror.NewRequestTimeout())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -169,7 +170,7 @@ func TestNewRequestTimeout(t *testing.T) {
 func TestNewProxyAuthRequired(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewProxyAuthRequired())
+		return response.With(c).Response(goerror.NewProxyAuthRequired())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -182,7 +183,7 @@ func TestNewProxyAuthRequired(t *testing.T) {
 func TestNewProcessing(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewProcessing())
+		return response.With(c).Response(goerror.NewProcessing())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -195,7 +196,7 @@ func TestNewProcessing(t *testing.T) {
 func TestNewPermanentRedirect(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewPermanentRedirect())
+		return response.With(c).Response(goerror.NewPermanentRedirect())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -208,7 +209,7 @@ func TestNewPermanentRedirect(t *testing.T) {
 func TestNewPaymentRequired(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewPaymentRequired())
+		return response.With(c).Response(goerror.NewPaymentRequired())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -221,7 +222,7 @@ func TestNewPaymentRequired(t *testing.T) {
 func TestNewPartialContent(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewPartialContent())
+		return response.With(c).Response(goerror.NewPartialContent())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -234,7 +235,7 @@ func TestNewPartialContent(t *testing.T) {
 func TestNewOK(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewOK(nil))
+		return response.With(c).Response(goerror.NewOK(nil))
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -247,7 +248,7 @@ func TestNewOK(t *testing.T) {
 func TestNewNotModified(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewNotModified())
+		return response.With(c).Response(goerror.NewNotModified())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -260,7 +261,7 @@ func TestNewNotModified(t *testing.T) {
 func TestNewNotAcceptable(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewNotAcceptable())
+		return response.With(c).Response(goerror.NewNotAcceptable())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -273,7 +274,7 @@ func TestNewNotAcceptable(t *testing.T) {
 func TestNewNonAuthoritativeInformation(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewNonAuthoritativeInformation())
+		return response.With(c).Response(goerror.NewNonAuthoritativeInformation())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -286,7 +287,7 @@ func TestNewNonAuthoritativeInformation(t *testing.T) {
 func TestNewNoContent(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewNoContent())
+		return response.With(c).Response(goerror.NewNoContent())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -299,7 +300,7 @@ func TestNewNoContent(t *testing.T) {
 func TestNewMultipleChoices(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewMultipleChoices())
+		return response.With(c).Response(goerror.NewMultipleChoices())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -312,7 +313,7 @@ func TestNewMultipleChoices(t *testing.T) {
 func TestNewMultiStatus(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewMultiStatus())
+		return response.With(c).Response(goerror.NewMultiStatus())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -325,7 +326,7 @@ func TestNewMultiStatus(t *testing.T) {
 func TestNewMovedPermanently(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewMovedPermanently())
+		return response.With(c).Response(goerror.NewMovedPermanently())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -338,7 +339,7 @@ func TestNewMovedPermanently(t *testing.T) {
 func TestNewMethodNotAllowed(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewMethodNotAllowed())
+		return response.With(c).Response(goerror.NewMethodNotAllowed())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -351,7 +352,7 @@ func TestNewMethodNotAllowed(t *testing.T) {
 func TestNewIMUsed(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewIMUsed())
+		return response.With(c).Response(goerror.NewIMUsed())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -364,7 +365,7 @@ func TestNewIMUsed(t *testing.T) {
 func TestNewFound(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewFound())
+		return response.With(c).Response(goerror.NewFound())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -377,7 +378,7 @@ func TestNewFound(t *testing.T) {
 func TestNewForbidden(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewForbidden())
+		return response.With(c).Response(goerror.NewForbidden())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -390,7 +391,7 @@ func TestNewForbidden(t *testing.T) {
 func TestNewEarlyHints(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewEarlyHints())
+		return response.With(c).Response(goerror.NewEarlyHints())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -403,7 +404,7 @@ func TestNewEarlyHints(t *testing.T) {
 func TestNewCreated(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewCreated(nil))
+		return response.With(c).Response(goerror.NewCreated(nil))
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -416,7 +417,7 @@ func TestNewCreated(t *testing.T) {
 func TestNewContinue(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewContinue())
+		return response.With(c).Response(goerror.NewContinue())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -429,7 +430,7 @@ func TestNewContinue(t *testing.T) {
 func TestNewConflict(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewConflict())
+		return response.With(c).Response(goerror.NewConflict())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -442,7 +443,7 @@ func TestNewConflict(t *testing.T) {
 func TestNewBadRequest(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewBadRequest())
+		return response.With(c).Response(goerror.NewBadRequest())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -455,7 +456,7 @@ func TestNewBadRequest(t *testing.T) {
 func TestNewAlreadyReported(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewAlreadyReported())
+		return response.With(c).Response(goerror.NewAlreadyReported())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -468,7 +469,7 @@ func TestNewAlreadyReported(t *testing.T) {
 func TestNewAccepted(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewAccepted())
+		return response.With(c).Response(goerror.NewAccepted())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -481,7 +482,7 @@ func TestNewAccepted(t *testing.T) {
 func TestNewGone(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewGone())
+		return response.With(c).Response(goerror.NewGone())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -494,7 +495,7 @@ func TestNewGone(t *testing.T) {
 func TestNewLengthRequired(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewLengthRequired())
+		return response.With(c).Response(goerror.NewLengthRequired())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -507,7 +508,7 @@ func TestNewLengthRequired(t *testing.T) {
 func TestNewPreconditionFailed(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewPreconditionFailed())
+		return response.With(c).Response(goerror.NewPreconditionFailed())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -520,7 +521,7 @@ func TestNewPreconditionFailed(t *testing.T) {
 func TestNewRequestEntityTooLarge(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewRequestEntityTooLarge())
+		return response.With(c).Response(goerror.NewRequestEntityTooLarge())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -533,7 +534,7 @@ func TestNewRequestEntityTooLarge(t *testing.T) {
 func TestNewRequestURITooLong(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewRequestURITooLong())
+		return response.With(c).Response(goerror.NewRequestURITooLong())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -546,7 +547,7 @@ func TestNewRequestURITooLong(t *testing.T) {
 func TestNewUnsupportedMediaType(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewUnsupportedMediaType())
+		return response.With(c).Response(goerror.NewUnsupportedMediaType())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -559,7 +560,7 @@ func TestNewUnsupportedMediaType(t *testing.T) {
 func TestNewRequestedRangeNotSatisfiable(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewRequestedRangeNotSatisfiable())
+		return response.With(c).Response(goerror.NewRequestedRangeNotSatisfiable())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -572,7 +573,7 @@ func TestNewRequestedRangeNotSatisfiable(t *testing.T) {
 func TestNewExpectationFailed(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewExpectationFailed())
+		return response.With(c).Response(goerror.NewExpectationFailed())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -585,7 +586,7 @@ func TestNewExpectationFailed(t *testing.T) {
 func TestNewTeapot(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewTeapot())
+		return response.With(c).Response(goerror.NewTeapot())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -598,7 +599,7 @@ func TestNewTeapot(t *testing.T) {
 func TestNewMisdirectedRequest(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewMisdirectedRequest())
+		return response.With(c).Response(goerror.NewMisdirectedRequest())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -611,7 +612,7 @@ func TestNewMisdirectedRequest(t *testing.T) {
 func TestNewUnprocessableEntity(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewUnprocessableEntity())
+		return response.With(c).Response(goerror.NewUnprocessableEntity())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -624,7 +625,7 @@ func TestNewUnprocessableEntity(t *testing.T) {
 func TestNewLocked(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewLocked())
+		return response.With(c).Response(goerror.NewLocked())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -637,7 +638,7 @@ func TestNewLocked(t *testing.T) {
 func TestNewFailedDependency(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewFailedDependency())
+		return response.With(c).Response(goerror.NewFailedDependency())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -650,7 +651,7 @@ func TestNewFailedDependency(t *testing.T) {
 func TestNewTooEarly(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewTooEarly())
+		return response.With(c).Response(goerror.NewTooEarly())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -663,7 +664,7 @@ func TestNewTooEarly(t *testing.T) {
 func TestNewUpgradeRequired(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewUpgradeRequired())
+		return response.With(c).Response(goerror.NewUpgradeRequired())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -676,7 +677,7 @@ func TestNewUpgradeRequired(t *testing.T) {
 func TestNewPreconditionRequired(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewPreconditionRequired())
+		return response.With(c).Response(goerror.NewPreconditionRequired())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -689,7 +690,7 @@ func TestNewPreconditionRequired(t *testing.T) {
 func TestNewTooManyRequests(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewTooManyRequests())
+		return response.With(c).Response(goerror.NewTooManyRequests())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -702,7 +703,7 @@ func TestNewTooManyRequests(t *testing.T) {
 func TestNewRequestHeaderFieldsTooLarge(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewRequestHeaderFieldsTooLarge())
+		return response.With(c).Response(goerror.NewRequestHeaderFieldsTooLarge())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -715,7 +716,7 @@ func TestNewRequestHeaderFieldsTooLarge(t *testing.T) {
 func TestNewUnavailableForLegalReasons(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewUnavailableForLegalReasons())
+		return response.With(c).Response(goerror.NewUnavailableForLegalReasons())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -728,7 +729,7 @@ func TestNewUnavailableForLegalReasons(t *testing.T) {
 func TestNewInternalServerError(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewInternalServerError())
+		return response.With(c).Response(goerror.NewInternalServerError())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -741,7 +742,7 @@ func TestNewInternalServerError(t *testing.T) {
 func TestNewNotImplemented(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewNotImplemented())
+		return response.With(c).Response(goerror.NewNotImplemented())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -754,7 +755,7 @@ func TestNewNotImplemented(t *testing.T) {
 func TestNewBadGateway(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewBadGateway())
+		return response.With(c).Response(goerror.NewBadGateway())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -767,7 +768,7 @@ func TestNewBadGateway(t *testing.T) {
 func TestNewServiceUnavailable(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewServiceUnavailable())
+		return response.With(c).Response(goerror.NewServiceUnavailable())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -780,7 +781,7 @@ func TestNewServiceUnavailable(t *testing.T) {
 func TestNewGatewayTimeout(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewGatewayTimeout())
+		return response.With(c).Response(goerror.NewGatewayTimeout())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -793,7 +794,7 @@ func TestNewGatewayTimeout(t *testing.T) {
 func TestNewHTTPVersionNotSupported(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewHTTPVersionNotSupported())
+		return response.With(c).Response(goerror.NewHTTPVersionNotSupported())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -806,7 +807,7 @@ func TestNewHTTPVersionNotSupported(t *testing.T) {
 func TestNewVariantAlsoNegotiates(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewVariantAlsoNegotiates())
+		return response.With(c).Response(goerror.NewVariantAlsoNegotiates())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -819,7 +820,7 @@ func TestNewVariantAlsoNegotiates(t *testing.T) {
 func TestNewInsufficientStorage(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewInsufficientStorage())
+		return response.With(c).Response(goerror.NewInsufficientStorage())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -832,7 +833,7 @@ func TestNewInsufficientStorage(t *testing.T) {
 func TestNewLoopDetected(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewLoopDetected())
+		return response.With(c).Response(goerror.NewLoopDetected())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -845,7 +846,7 @@ func TestNewLoopDetected(t *testing.T) {
 func TestNewNotExtended(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewNotExtended())
+		return response.With(c).Response(goerror.NewNotExtended())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
@@ -858,7 +859,7 @@ func TestNewNotExtended(t *testing.T) {
 func TestNewNetworkAuthenticationRequired(t *testing.T) {
 	app := fiber.New()
 	app.Get("/test", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewNetworkAuthenticationRequired())
+		return response.With(c).Response(goerror.NewNetworkAuthenticationRequired())
 	})
 
 	resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))

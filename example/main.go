@@ -5,12 +5,13 @@ import (
 	"github.com/gofiber/contrib/fiberi18n/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/prongbang/fibererror"
+	"github.com/prongbang/goerror"
 	"golang.org/x/text/language"
 	"net/http"
 )
 
 type CustomError struct {
-	fibererror.Body
+	goerror.Body
 }
 
 // Error implements error.
@@ -20,7 +21,7 @@ func (c *CustomError) Error() string {
 
 func NewCustomError() error {
 	return &CustomError{
-		Body: fibererror.Body{
+		Body: goerror.Body{
 			Code: "CUS001",
 		},
 	}
@@ -65,8 +66,8 @@ func main() {
 		return response.With(c).Response(NewCustomError())
 	})
 
-	err := app.Listen(":3000")
+	err := app.Listen(":3001")
 	if err != nil {
-		fmt.Println("err:")
+		fmt.Println("err:", err)
 	}
 }
