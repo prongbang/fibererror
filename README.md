@@ -18,6 +18,7 @@ go get github.com/prongbang/fibererror
 package main
 
 import (
+	"github.com/prongbang/goerror"
 	"github.com/prongbang/fibererror"
 	"github.com/gofiber/fiber/v2"
 )
@@ -28,7 +29,7 @@ func main() {
 	response := fibererror.New()
 	
 	app.Get("/", func(c *fiber.Ctx) error {
-		return response.With(c).Response(fibererror.NewUnauthorized())
+		return response.With(c).Response(goerror.NewUnauthorized())
 	})
 
 	_ = app.Listen(":3000")
@@ -41,12 +42,13 @@ func main() {
 package main
 
 import (
+	"github.com/prongbang/goerror"
 	"github.com/prongbang/fibererror"
 	"github.com/gofiber/fiber/v2"
 )
 
 type CustomError struct {
-	fibererror.Body
+	goerror.Body
 }
 
 // Error implements error.
@@ -56,7 +58,7 @@ func (c *CustomError) Error() string {
 
 func NewCustomError() error {
 	return &CustomError{
-		Body: fibererror.Body{
+		Body: goerror.Body{
 			Code:    "CUS001",
 		},
 	}
