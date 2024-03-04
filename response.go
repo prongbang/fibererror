@@ -16,7 +16,7 @@ type I18n struct {
 }
 
 type Custom interface {
-	Response(Ctx *fiber.Ctx, err error) error
+	Response(ctx *fiber.Ctx, err error) error
 }
 
 type Response interface {
