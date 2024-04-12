@@ -4,6 +4,13 @@
 
 Create a custom response using the error interface in Go.
 
+### Benchmark
+
+```shell
+BenchmarkFiberErrorResponse_Response-10    	      186163	      7115 ns/op
+BenchmarkBuildInErrorResponse_Response-10      	  143802	      7479 ns/op
+```
+
 ### Install
 
 ```shell

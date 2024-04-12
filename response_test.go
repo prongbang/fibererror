@@ -868,3 +868,39 @@ func TestNewNetworkAuthenticationRequired(t *testing.T) {
 		t.Error("Error", resp.StatusCode)
 	}
 }
+
+func BenchmarkFiberErrorResponse_Response(b *testing.B) {
+	app := fiber.New()
+	app.Get("/test", func(c *fiber.Ctx) error {
+		return response.With(c).Response(goerror.NewNetworkAuthenticationRequired())
+	})
+
+	for i := 0; i < b.N; i++ {
+		resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
+
+		if resp.StatusCode != http.StatusNetworkAuthenticationRequired {
+			b.Error("Error", resp.StatusCode)
+		}
+	}
+}
+
+func BenchmarkBuildInErrorResponse_Response(b *testing.B) {
+	app := fiber.New()
+	app.Get("/test", func(c *fiber.Ctx) error {
+		return c.Status(http.StatusNetworkAuthenticationRequired).
+			JSON(goerror.NetworkAuthenticationRequired{
+				Body: goerror.Body{
+					Code:    goerror.CodeNetworkAuthenticationRequired,
+					Message: http.StatusText(http.StatusNetworkAuthenticationRequired),
+				},
+			})
+	})
+
+	for i := 0; i < b.N; i++ {
+		resp, _ := app.Test(httptest.NewRequest("GET", "/test", nil))
+
+		if resp.StatusCode != http.StatusNetworkAuthenticationRequired {
+			b.Error("Error", resp.StatusCode)
+		}
+	}
+}
